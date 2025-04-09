@@ -136,6 +136,9 @@ export default function Home() {
             >
               Copy Semua Link
             </button>
+            <div style={{ textAlign: "right" }}>
+            <strong>Total File: {files.length}</strong>
+          </div>
           </div>
           <table
             style={{
@@ -186,9 +189,7 @@ export default function Home() {
               ))}
             </tbody>
           </table>
-          <div style={{ textAlign: "right" }}>
-            <strong>Total File: {files.length}</strong>
-          </div>
+          
         </>
       )}
     </div>
