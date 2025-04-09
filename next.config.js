@@ -1,12 +1,10 @@
-import type { NextConfig } from 'next'
-
 const myArray = (process.env.SOME_ENV_VAR || '').split(',')
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   reactStrictMode: true,
   env: {
     MY_ARRAY: myArray.join(','),
   },
 }
 
-export default nextConfig
+module.exports = nextConfig
