@@ -151,7 +151,7 @@ export default function Home() {
                 marginBottom: "0.5rem"
               }}
             >
-              Copy Semua Nama
+              Copy Nama
             </button>
             <button
               onClick={copyAllLinks}
@@ -165,8 +165,39 @@ export default function Home() {
                 marginBottom: "0.5rem"
               }}
             >
-              Copy Semua Nama + Link
+              Copy Semua
             </button>
+ 
+  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+    <a
+      href={file.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{ color: "#1a0dab", wordBreak: "break-word", textDecoration: "underline" }}
+    >
+      {file.link}
+    </a>
+    <button
+      onClick={() => {
+        navigator.clipboard
+          .writeText(file.link)
+          .then(() => alert(`Link berhasil disalin: ${file.name}`))
+          .catch(() => alert("Gagal menyalin link."));
+      }}
+      style={{
+        padding: "0.25rem 0.5rem",
+        fontSize: "0.75rem",
+        background: "#800080", // Warna ungu
+        color: "#fff",
+        border: "none",
+        borderRadius: "4px",
+        cursor: "pointer",
+      }}
+    >
+      Copy Link
+    </button>
+  </div>
+      
             <div><strong>Total File: {files.length}</strong></div>
           </div>
 
@@ -192,35 +223,14 @@ export default function Home() {
       <td style={tdStyle}>{index + 1}</td>
       <td style={tdStyle}>{file.name}</td>
       <td style={tdStyle}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-          <a
-            href={file.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#1a0dab", textDecoration: "underline", wordBreak: "break-word" }}
-          >
-            {file.link}
-          </a>
-          <button
-            onClick={() => {
-              navigator.clipboard
-                .writeText(file.link)
-                .then(() => alert(`Link berhasil disalin: ${file.name}`))
-                .catch(() => alert("Gagal menyalin link."));
-            }}
-            style={{
-              padding: "0.25rem 0.5rem",
-              fontSize: "0.75rem",
-              background: "#9370DB",
-              color: "#fff",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Copy Link
-          </button>
-        </div>
+        <a
+          href={file.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#1a0dab", textDecoration: "underline", wordBreak: "break-word" }}
+        >
+          {file.link}
+        </a>
       </td>
     </tr>
   ))}
