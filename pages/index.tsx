@@ -106,7 +106,7 @@ export default function Home() {
         WinterLinkFindU
       </h1>
       <p style={{ marginBottom: "1rem", textAlign: "center" }}>
-        winter uhuyyy!! 💖💖
+        winter uhuyyy!! 💖💖💖
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
         <input
@@ -157,7 +157,7 @@ export default function Home() {
                 cursor: "pointer"
               }}
             >
-              Copy Nama
+              Copy Nama🧡
             </button>
             <button
               onClick={copyAllNamesAndLinks}
@@ -170,7 +170,7 @@ export default function Home() {
                 cursor: "pointer"
               }}
             >
-              Copy Semua
+              Copy Semua❤
             </button>
             <button
               onClick={copyAllLinks}
@@ -183,11 +183,12 @@ export default function Home() {
                 cursor: "pointer"
               }}
             >
-              Copy Link
+              Copy Link💜
             </button>
           </div>
 
-          <div><strong>Total File: {files.length}</strong></div>
+           <div style={{ marginTop: "0.5rem" }}><strong>Total File: {files.length}</strong></div>
+          </div>
 
           <div style={{ overflowX: "auto" }}>
             <table
