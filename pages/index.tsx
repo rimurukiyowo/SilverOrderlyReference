@@ -143,7 +143,7 @@ export default function Home() {
               onClick={copyAllNames}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#1E90FF",
+                background: "#8A2BE2",
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
@@ -157,7 +157,7 @@ export default function Home() {
               onClick={copyAllLinks}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#008000",
+                background: "#DDA0DD",
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
@@ -187,23 +187,44 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {files.map((file, index) => (
-                  <tr key={file.id}>
-                    <td style={tdStyle}>{index + 1}</td>
-                    <td style={tdStyle}>{file.name}</td>
-                    <td style={tdStyle}>
-                      <a
-                        href={file.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: "#1a0dab", textDecoration: "underline", wordBreak: "break-word" }}
-                      >
-                        {file.link}
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+  {files.map((file, index) => (
+    <tr key={file.id}>
+      <td style={tdStyle}>{index + 1}</td>
+      <td style={tdStyle}>{file.name}</td>
+      <td style={tdStyle}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+          <a
+            href={file.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#1a0dab", textDecoration: "underline", wordBreak: "break-word" }}
+          >
+            {file.link}
+          </a>
+          <button
+            onClick={() => {
+              navigator.clipboard
+                .writeText(file.link)
+                .then(() => alert(`Link berhasil disalin: ${file.name}`))
+                .catch(() => alert("Gagal menyalin link."));
+            }}
+            style={{
+              padding: "0.25rem 0.5rem",
+              fontSize: "0.75rem",
+              background: "#9370DB",
+              color: "#fff",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            Copy Link
+          </button>
+        </div>
+      </td>
+    </tr>
+  ))}
+</tbody>
             </table>
           </div>
         </>
