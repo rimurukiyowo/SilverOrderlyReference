@@ -6,7 +6,7 @@ type FileItem = {
   id: string;
   name: string;
   link: string;
-}; 
+};
 
 export default function Home() {
   const [folderInput, setFolderInput] = useState("");
@@ -150,7 +150,7 @@ export default function Home() {
               onClick={copyAllNames}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#8A2BE2", // ungu 1
+                background: "#8A2BE2",
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
@@ -163,7 +163,7 @@ export default function Home() {
               onClick={copyAllNamesAndLinks}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#9932CC", // ungu 2
+                background: "#9932CC",
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
@@ -176,7 +176,7 @@ export default function Home() {
               onClick={copyAllLinks}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#BA55D3", // ungu 3
+                background: "#BA55D3",
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
@@ -187,7 +187,8 @@ export default function Home() {
             </button>
           </div>
 
-           <div style={{ marginTop: "0.5rem" }}><strong>Total File: {files.length}</strong></div>
+          <div style={{ marginTop: "0.5rem" }}>
+            <strong>Total File: {files.length}</strong>
           </div>
 
           <div style={{ overflowX: "auto" }}>
@@ -242,5 +243,5 @@ const thStyle = {
 const tdStyle = {
   border: "1px solid #ccc",
   padding: "0.5rem",
-  wordWrap: "break-word" as const,
+  wordBreak: "break-word" as const,
 };
