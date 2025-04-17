@@ -157,7 +157,7 @@ export default function Home() {
                 cursor: "pointer"
               }}
             >
-              Copy Nama🧡
+              Copy Nama
             </button>
             <button
               onClick={copyAllNamesAndLinks}
@@ -170,7 +170,7 @@ export default function Home() {
                 cursor: "pointer"
               }}
             >
-              Copy Semua❤
+              Copy Semua
             </button>
             <button
               onClick={copyAllLinks}
@@ -183,13 +183,13 @@ export default function Home() {
                 cursor: "pointer"
               }}
             >
-              Copy Link💜
+              Copy Link
             </button>
           </div>
 
-          <div style={{ marginTop: "0.5rem" }}>
-            <strong>Total File: {files.length}</strong>
-          </div>
+          <div style={{ marginTop: "0.5rem", display: "flex", justifyContent: "flex-end" }}>
+  <strong>Total File: {files.length}</strong>
+</div>
 
           <div style={{ overflowX: "auto" }}>
             <table
