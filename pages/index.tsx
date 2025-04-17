@@ -56,6 +56,14 @@ export default function Home() {
     setLoading(false);
   };
 
+  const copyAllNames = () => {
+    const allNames = files.map((file) => file.name).join("\n");
+    navigator.clipboard
+      .writeText(allNames)
+      .then(() => alert("Semua nama berhasil disalin!"))
+      .catch(() => alert("Gagal menyalin."));
+  };
+
   const copyAllLinks = () => {
     const allLinks = files
       .map((file) => `${file.name} - ${file.link}`)
@@ -92,8 +100,7 @@ export default function Home() {
         WinterLinkFindU
       </h1>
       <p style={{ marginBottom: "1rem", textAlign: "center" }}>
-        Aplikasi ini bisa di-install seperti aplikasi Android!
-      </p>
+        winter uhuyyy!! 💖💖 </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
         <input
           type="text"
@@ -132,6 +139,20 @@ export default function Home() {
       {files.length > 0 && (
         <>
           <div style={{ marginBottom: "1rem", textAlign: "right" }}>
+            <button
+              onClick={copyAllNames}
+              style={{
+                padding: "0.5rem 1rem",
+                background: "#1E90FF",
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                marginBottom: "0.5rem"
+              }}
+            >
+              Copy Semua Nama
+            </button>
             <button
               onClick={copyAllLinks}
               style={{
