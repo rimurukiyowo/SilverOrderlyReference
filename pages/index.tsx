@@ -65,12 +65,18 @@ export default function Home() {
   };
 
   const copyAllLinks = () => {
-    const allLinks = files
-      .map((file) => `${file.name} - ${file.link}`)
-      .join("\n");
+    const allLinks = files.map((file) => file.link).join("\n");
     navigator.clipboard
       .writeText(allLinks)
-      .then(() => alert("Semua nama + link berhasil disalin!"))
+      .then(() => alert("Semua link berhasil disalin!"))
+      .catch(() => alert("Gagal menyalin."));
+  };
+
+  const copyAllNamesAndLinks = () => {
+    const all = files.map((file) => `${file.name} ${file.link}`).join("\n");
+    navigator.clipboard
+      .writeText(all)
+      .then(() => alert("Semua nama dan link berhasil disalin!"))
       .catch(() => alert("Gagal menyalin."));
   };
 
@@ -100,7 +106,8 @@ export default function Home() {
         WinterLinkFindU
       </h1>
       <p style={{ marginBottom: "1rem", textAlign: "center" }}>
-        winter uhuyyy!! 💖💖 </p>
+        winter uhuyyy!! 💖💖
+      </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
         <input
           type="text"
@@ -138,68 +145,49 @@ export default function Home() {
 
       {files.length > 0 && (
         <>
-          <div style={{ marginBottom: "1rem", textAlign: "right" }}>
+          <div style={{ marginBottom: "1rem", textAlign: "right", display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
             <button
               onClick={copyAllNames}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#8A2BE2",
+                background: "#8A2BE2", // ungu 1
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
-                cursor: "pointer",
-                marginBottom: "0.5rem"
+                cursor: "pointer"
               }}
             >
               Copy Nama
             </button>
             <button
-              onClick={copyAllLinks}
+              onClick={copyAllNamesAndLinks}
               style={{
                 padding: "0.5rem 1rem",
-                background: "#DDA0DD",
+                background: "#9932CC", // ungu 2
                 color: "#fff",
                 border: "none",
                 borderRadius: "4px",
-                cursor: "pointer",
-                marginBottom: "0.5rem"
+                cursor: "pointer"
               }}
             >
               Copy Semua
             </button>
- 
-  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-    <a
-      href={file.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{ color: "#1a0dab", wordBreak: "break-word", textDecoration: "underline" }}
-    >
-      {file.link}
-    </a>
-    <button
-      onClick={() => {
-        navigator.clipboard
-          .writeText(file.link)
-          .then(() => alert(`Link berhasil disalin: ${file.name}`))
-          .catch(() => alert("Gagal menyalin link."));
-      }}
-      style={{
-        padding: "0.25rem 0.5rem",
-        fontSize: "0.75rem",
-        background: "#800080", // Warna ungu
-        color: "#fff",
-        border: "none",
-        borderRadius: "4px",
-        cursor: "pointer",
-      }}
-    >
-      Copy Link
-    </button>
-  </div>
-      
-            <div><strong>Total File: {files.length}</strong></div>
+            <button
+              onClick={copyAllLinks}
+              style={{
+                padding: "0.5rem 1rem",
+                background: "#BA55D3", // ungu 3
+                color: "#fff",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer"
+              }}
+            >
+              Copy Link
+            </button>
           </div>
+
+          <div><strong>Total File: {files.length}</strong></div>
 
           <div style={{ overflowX: "auto" }}>
             <table
@@ -218,23 +206,23 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-  {files.map((file, index) => (
-    <tr key={file.id}>
-      <td style={tdStyle}>{index + 1}</td>
-      <td style={tdStyle}>{file.name}</td>
-      <td style={tdStyle}>
-        <a
-          href={file.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "#1a0dab", textDecoration: "underline", wordBreak: "break-word" }}
-        >
-          {file.link}
-        </a>
-      </td>
-    </tr>
-  ))}
-</tbody>
+                {files.map((file, index) => (
+                  <tr key={file.id}>
+                    <td style={tdStyle}>{index + 1}</td>
+                    <td style={tdStyle}>{file.name}</td>
+                    <td style={tdStyle}>
+                      <a
+                        href={file.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: "#1a0dab", textDecoration: "underline", wordBreak: "break-word" }}
+                      >
+                        {file.link}
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </>
