@@ -6,7 +6,7 @@ type FileItem = {
   id: string;
   name: string;
   link: string;
-};
+}; 
 
 export default function Home() {
   const [folderInput, setFolderInput] = useState("");
