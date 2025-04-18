@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/public/1000303458-removebg-preview.png" />
+        <link rel="icon" href="/1000303458-removebg-preview.png" />
         <meta name="theme-color" content="#000000" />
       </Head>
       <Component {...pageProps} />
