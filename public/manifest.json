@@ -1,6 +1,6 @@
 {
-  "name": "Nama Aplikasimu",
-  "short_name": "Aplikasimu",
+  "name": "WinterlinkFindU",
+  "short_name": "WinterLink",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
