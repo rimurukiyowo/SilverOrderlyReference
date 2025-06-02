@@ -33,7 +33,7 @@ export default function Home() {
 
     try {
       const res = await fetch(
-        `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name)`
+        `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&orderBy=name&key=${apiKey}&fields=files(id,name)`
       );
 
       const data = await res.json();
@@ -188,8 +188,8 @@ export default function Home() {
           </div>
 
           <div style={{ marginTop: "0.5rem", display: "flex", justifyContent: "flex-end" }}>
-  <strong>Total File: {files.length}</strong>
-</div>
+            <strong>Total File: {files.length}</strong>
+          </div>
 
           <div style={{ overflowX: "auto" }}>
             <table
