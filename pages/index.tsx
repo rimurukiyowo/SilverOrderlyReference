@@ -16,9 +16,15 @@ export default function Home() {
 
   const apiKey = 'AIzaSyD71nWVbtMxWK4T05Ty4qMuIRTP4ij2i48';
 
+  // Fungsi untuk mengambil ID dari link Google Drive
   const extractFolderId = (input: string) => {
     const match = input.match(/[-\w]{25,}/);
     return match ? match[0] : '';
+  };
+
+  // Natural sort untuk mengurutkan nama file secara manusiawi
+  const naturalSort = (a: string, b: string) => {
+    return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
   };
 
   const fetchFiles = async () => {
@@ -34,7 +40,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&orderBy=name&key=${apiKey}&fields=files(id,name)&pageSize=100`
+        `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&orderBy=name&key=${apiKey}&fields=files(id,name)`
       );
       const data = await response.json();
 
@@ -48,9 +54,7 @@ export default function Home() {
             name: file.name,
             link: `https://drive.google.com/file/d/${file.id}/view`,
           }))
-          .sort((a, b) =>
-            a.name.localeCompare(b.name, 'id', { sensitivity: 'base' })
-          );
+          .sort((a, b) => naturalSort(a.name, b.name));
 
         setFiles(fetchedFiles);
       }
