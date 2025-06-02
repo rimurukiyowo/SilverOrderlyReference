@@ -17,7 +17,6 @@ export default function Home() {
   const apiKey = 'AIzaSyD71nWVbtMxWK4T05Ty4qMuIRTP4ij2i48';
 
   const extractFolderId = (input: string) => {
-    // Ambil ID folder dari link atau input langsung
     const match = input.match(/[-\w]{25,}/);
     return match ? match[0] : '';
   };
@@ -35,7 +34,7 @@ export default function Home() {
 
     try {
       const response = await fetch(
-        `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&orderBy=name&key=${apiKey}&fields=files(id,name)`
+        `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&orderBy=name&key=${apiKey}&fields=files(id,name)&pageSize=100`
       );
       const data = await response.json();
 
@@ -43,11 +42,16 @@ export default function Home() {
         setError(data.error.message);
         setFiles([]);
       } else {
-        const fetchedFiles: FileItem[] = data.files.map((file: any) => ({
-          id: file.id,
-          name: file.name,
-          link: `https://drive.google.com/file/d/${file.id}/view`,
-        }));
+        const fetchedFiles: FileItem[] = data.files
+          .map((file: any) => ({
+            id: file.id,
+            name: file.name,
+            link: `https://drive.google.com/file/d/${file.id}/view`,
+          }))
+          .sort((a, b) =>
+            a.name.localeCompare(b.name, 'id', { sensitivity: 'base' })
+          );
+
         setFiles(fetchedFiles);
       }
     } catch (err) {
