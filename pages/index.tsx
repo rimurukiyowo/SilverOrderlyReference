@@ -259,16 +259,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     animation: 'gradientMove 15s ease infinite',
     zIndex: -2,
   },
-  container: {
-    padding: '1rem',
-    maxWidth: '800px',
-    margin: 'auto',
-    fontFamily: 'Arial, sans-serif',
-    background: 'rgba(245, 245, 245, 0.85)',
-    minHeight: '100vh',
-    borderRadius: '8px',
-    backdropFilter: 'blur(5px)',
-  },
+ container: {
+  padding: '1rem',
+  maxWidth: '800px',
+  margin: 'auto',
+  fontFamily: 'Arial, sans-serif',
+  background: 'transparent', // ini bikin transparan
+  minHeight: '100vh',
+  borderRadius: '8px',
+},
   title: {
     fontSize: '2rem',
     marginBottom: '0.5rem',
