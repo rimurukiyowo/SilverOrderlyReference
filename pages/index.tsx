@@ -16,13 +16,13 @@ export default function Home() {
 
   const apiKey = 'AIzaSyD71nWVbtMxWK4T05Ty4qMuIRTP4ij2i48';
 
-  // Fungsi untuk mengambil ID dari link Google Drive
+  // Ambil ID folder dari link
   const extractFolderId = (input: string) => {
     const match = input.match(/[-\w]{25,}/);
     return match ? match[0] : '';
   };
 
-  // Natural sort untuk mengurutkan nama file secara manusiawi
+  // Urutkan nama file secara alami
   const naturalSort = (a: string, b: string) => {
     return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
   };
@@ -99,82 +99,170 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    // Tambahkan keyframes untuk background
+    const styleSheet = document.styleSheets[0];
+    styleSheet.insertRule(`
+      @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    `, styleSheet.cssRules.length);
+  }, []);
+
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>WinterLinkFindU</h1>
-      <p style={styles.subtitle}>winter uhuyyy!! 💖💖💖</p>
+    <div style={styles.wrapper}>
+      {/* Background gradasi bergerak */}
+      <div style={styles.animatedBackground}></div>
+      {/* Efek salju */}
+      <SnowEffect />
 
-      <div style={styles.inputContainer}>
-        <input
-          type="text"
-          placeholder="Paste Link atau ID Folder Google Drive"
-          value={folderInput}
-          onChange={(e) => setFolderInput(e.target.value)}
-          style={styles.input}
-        />
-        <button onClick={fetchFiles} disabled={loading} style={styles.buttonPrimary}>
-          {loading ? 'Memuat...' : 'Tampilkan File'}
-        </button>
-      </div>
+      {/* Konten utama */}
+      <div style={styles.container}>
+        <h1 style={styles.title}>WinterLinkFindU</h1>
+        <p style={styles.subtitle}>winter uhuyyy!! 💖💖💖</p>
 
-      {error && <div style={styles.error}>{error}</div>}
+        <div style={styles.inputContainer}>
+          <input
+            type="text"
+            placeholder="Paste Link atau ID Folder Google Drive"
+            value={folderInput}
+            onChange={(e) => setFolderInput(e.target.value)}
+            style={styles.input}
+          />
+          <button onClick={fetchFiles} disabled={loading} style={styles.buttonPrimary}>
+            {loading ? 'Memuat...' : 'Tampilkan File'}
+          </button>
+        </div>
 
-      {files.length > 0 && (
-        <>
-          <div style={styles.copyButtons}>
-            <button onClick={copyAllNames} style={styles.copyButton}>Copy Nama</button>
-            <button onClick={copyAllNamesAndLinks} style={styles.copyButton}>Copy Semua</button>
-            <button onClick={copyAllLinks} style={styles.copyButton}>Copy Link</button>
-          </div>
+        {error && <div style={styles.error}>{error}</div>}
 
-          <div style={styles.totalInfo}>
-            <strong>Total File: {files.length}</strong>
-          </div>
+        {files.length > 0 && (
+          <>
+            <div style={styles.copyButtons}>
+              <button onClick={copyAllNames} style={styles.copyButton}>Copy Nama</button>
+              <button onClick={copyAllNamesAndLinks} style={styles.copyButton}>Copy Semua</button>
+              <button onClick={copyAllLinks} style={styles.copyButton}>Copy Link</button>
+            </div>
 
-          <div style={{ overflowX: 'auto' }}>
-            <table style={styles.table}>
-              <thead>
-                <tr>
-                  <th style={styles.th}>No</th>
-                  <th style={styles.th}>Nama File</th>
-                  <th style={styles.th}>Link File</th>
-                </tr>
-              </thead>
-              <tbody>
-                {files.map((file, index) => (
-                  <tr key={file.id}>
-                    <td style={styles.td}>{index + 1}</td>
-                    <td style={styles.td}>{file.name}</td>
-                    <td style={styles.td}>
-                      <a
-                        href={file.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={styles.link}
-                      >
-                        {file.link}
-                      </a>
-                    </td>
+            <div style={styles.totalInfo}>
+              <strong>Total File: {files.length}</strong>
+            </div>
+
+            <div style={{ overflowX: 'auto' }}>
+              <table style={styles.table}>
+                <thead>
+                  <tr>
+                    <th style={styles.th}>No</th>
+                    <th style={styles.th}>Nama File</th>
+                    <th style={styles.th}>Link File</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </>
-      )}
+                </thead>
+                <tbody>
+                  {files.map((file, index) => (
+                    <tr key={file.id}>
+                      <td style={styles.td}>{index + 1}</td>
+                      <td style={styles.td}>{file.name}</td>
+                      <td style={styles.td}>
+                        <a
+                          href={file.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={styles.link}
+                        >
+                          {file.link}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Komponen efek salju
+function SnowEffect() {
+  const [flakes, setFlakes] = useState<{ id: number; x: number; y: number; size: number; speed: number }[]>([]);
+
+  useEffect(() => {
+    const newFlakes = Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      size: Math.random() * 4 + 2,
+      speed: Math.random() * 1 + 0.5,
+    }));
+    setFlakes(newFlakes);
+
+    const interval = setInterval(() => {
+      setFlakes(prev =>
+        prev.map(flake => {
+          let y = flake.y + flake.speed;
+          if (y > window.innerHeight) {
+            y = -flake.size;
+          }
+          return { ...flake, y };
+        })
+      );
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: -1 }}>
+      {flakes.map(flake => (
+        <div
+          key={flake.id}
+          style={{
+            position: 'absolute',
+            top: flake.y,
+            left: flake.x,
+            width: flake.size,
+            height: flake.size,
+            background: 'white',
+            borderRadius: '50%',
+            opacity: 0.8,
+          }}
+        ></div>
+      ))}
     </div>
   );
 }
 
 // Styling
 const styles: { [key: string]: React.CSSProperties } = {
+  wrapper: {
+    position: 'relative',
+    minHeight: '100vh',
+    overflow: 'hidden',
+  },
+  animatedBackground: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd)',
+    backgroundSize: '400% 400%',
+    animation: 'gradientMove 15s ease infinite',
+    zIndex: -2,
+  },
   container: {
     padding: '1rem',
     maxWidth: '800px',
     margin: 'auto',
     fontFamily: 'Arial, sans-serif',
-    background: '#f5f5f5',
+    background: 'rgba(245, 245, 245, 0.85)',
     minHeight: '100vh',
+    borderRadius: '8px',
+    backdropFilter: 'blur(5px)',
   },
   title: {
     fontSize: '2rem',
