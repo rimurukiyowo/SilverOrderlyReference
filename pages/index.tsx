@@ -104,7 +104,6 @@ export default function Home() {
       {/* Efek salju */}
       <SnowEffect />
 
-      {/* Tambahkan CSS keyframes langsung */}
       <style>{`
         @keyframes gradientMove {
           0% { background-position: 0% 50%; }
@@ -113,7 +112,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* Konten utama */}
       <div style={styles.container}>
         <h1 style={styles.title}>WinterLinkFindU</h1>
         <p style={styles.subtitle}>winter uhuyyy!! 💖💖💖</p>
@@ -181,7 +179,7 @@ export default function Home() {
   );
 }
 
-// Komponen efek salju
+// Efek salju
 function SnowEffect() {
   const [flakes, setFlakes] = useState<
     { id: number; x: number; y: number; size: number; speed: number }[]
@@ -259,15 +257,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     animation: 'gradientMove 15s ease infinite',
     zIndex: -2,
   },
- container: {
-  padding: '1rem',
-  maxWidth: '800px',
-  margin: 'auto',
-  fontFamily: 'Arial, sans-serif',
-  background: 'transparent', // ini bikin transparan
-  minHeight: '100vh',
-  borderRadius: '8px',
-},
+  container: {
+    padding: '1rem',
+    maxWidth: '800px',
+    margin: 'auto',
+    fontFamily: 'Arial, sans-serif',
+    background: 'transparent',
+    minHeight: '100vh',
+    borderRadius: '8px',
+  },
   title: {
     fontSize: '2rem',
     marginBottom: '0.5rem',
@@ -328,19 +326,22 @@ const styles: { [key: string]: React.CSSProperties } = {
   table: {
     width: '100%',
     borderCollapse: 'collapse',
-    background: '#fff',
+    background: 'transparent', // transparan
     borderRadius: '8px',
   },
   th: {
-    border: '1px solid #ccc',
+    border: '1px solid rgba(255,255,255,0.5)',
     padding: '0.5rem',
-    backgroundColor: '#eee',
+    backgroundColor: 'rgba(255,255,255,0.2)', // semi transparan
     textAlign: 'left',
+    color: '#000',
   },
   td: {
-    border: '1px solid #ccc',
+    border: '1px solid rgba(255,255,255,0.5)',
     padding: '0.5rem',
     wordBreak: 'break-word',
+    backgroundColor: 'transparent', // transparan
+    color: '#000',
   },
   link: {
     color: '#1a0dab',
