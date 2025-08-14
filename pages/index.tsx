@@ -16,13 +16,11 @@ export default function Home() {
 
   const apiKey = 'AIzaSyD71nWVbtMxWK4T05Ty4qMuIRTP4ij2i48';
 
-  // Ambil ID folder dari link
   const extractFolderId = (input: string) => {
     const match = input.match(/[-\w]{25,}/);
     return match ? match[0] : '';
   };
 
-  // Urutkan nama file secara alami
   const naturalSort = (a: string, b: string) => {
     return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' });
   };
@@ -58,7 +56,7 @@ export default function Home() {
 
         setFiles(fetchedFiles);
       }
-    } catch (err) {
+    } catch {
       setError('Terjadi kesalahan saat mengambil data.');
       setFiles([]);
     }
@@ -99,24 +97,21 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    // Tambahkan keyframes untuk background
-    const styleSheet = document.styleSheets[0];
-    styleSheet.insertRule(`
-      @keyframes gradientMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-    `, styleSheet.cssRules.length);
-  }, []);
-
   return (
     <div style={styles.wrapper}>
-      {/* Background gradasi bergerak */}
+      {/* Animasi background */}
       <div style={styles.animatedBackground}></div>
       {/* Efek salju */}
       <SnowEffect />
+
+      {/* Tambahkan CSS keyframes langsung */}
+      <style>{`
+        @keyframes gradientMove {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
 
       {/* Konten utama */}
       <div style={styles.container}>
@@ -188,7 +183,9 @@ export default function Home() {
 
 // Komponen efek salju
 function SnowEffect() {
-  const [flakes, setFlakes] = useState<{ id: number; x: number; y: number; size: number; speed: number }[]>([]);
+  const [flakes, setFlakes] = useState<
+    { id: number; x: number; y: number; size: number; speed: number }[]
+  >([]);
 
   useEffect(() => {
     const newFlakes = Array.from({ length: 30 }).map((_, i) => ({
@@ -216,7 +213,15 @@ function SnowEffect() {
   }, []);
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: -1 }}>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: -1
+    }}>
       {flakes.map(flake => (
         <div
           key={flake.id}
