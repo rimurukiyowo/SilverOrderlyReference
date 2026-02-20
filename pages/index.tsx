@@ -17,16 +17,16 @@ export default function Home() {
   const apiKey = 'AIzaSyD71nWVbtMxWK4T05Ty4qMuIRTP4ij2i48';
 
   // ✅ USER TAG (TIDAK TERLIHAT DI UI)
-  const getUserTag = () => {
-    if (typeof window === 'undefined') return 'flowers';
+ const getUserTag = () => {
+  if (typeof window === "undefined") return "server";
 
-    let tag = localStorage.getItem('winter_tag');
-    if (!tag) {
-      tag = 'flowers_' + Math.random().toString(36).substring(2, 8);
-      localStorage.setItem('winter_tag', tag);
-    }
-    return tag;
-  };
+  let tag = localStorage.getItem("winter_tag");
+  if (!tag) {
+    tag = "flowers_" + Math.random().toString(36).substring(2, 8);
+    localStorage.setItem("winter_tag", tag);
+  }
+  return tag;
+};
 
   const extractFolderId = (input: string) => {
     const match = input.match(/[-\w]{25,}/);
