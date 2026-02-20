@@ -16,18 +16,6 @@ export default function Home() {
 
   const apiKey = 'AIzaSyD71nWVbtMxWK4T05Ty4qMuIRTP4ij2i48';
 
-  // ✅ USER TAG (TIDAK TERLIHAT DI UI)
- const getUserTag = () => {
-  if (typeof window === "undefined") return "server";
-
-  let tag = localStorage.getItem("winter_tag");
-  if (!tag) {
-    tag = "flowers_" + Math.random().toString(36).substring(2, 8);
-    localStorage.setItem("winter_tag", tag);
-  }
-  return tag;
-};
-
   const extractFolderId = (input: string) => {
     const match = input.match(/[-\w]{25,}/);
     return match ? match[0] : '';
@@ -58,14 +46,11 @@ export default function Home() {
         setError(data.error.message);
         setFiles([]);
       } else {
-        const userTag = getUserTag(); // ambil sekali
-
         const fetchedFiles: FileItem[] = data.files
           .map((file: any) => ({
             id: file.id,
             name: file.name,
-            // ✅ LINK SUDAH ADA TANDA FLOWERS
-            link: `https://drive.google.com/file/d/${file.id}/view?ref=${userTag}`,
+            link: `https://drive.google.com/file/d/${file.id}/view`,
           }))
           .sort((a, b) => naturalSort(a.name, b.name));
 
@@ -114,7 +99,9 @@ export default function Home() {
 
   return (
     <div style={styles.wrapper}>
+      {/* Animasi background */}
       <div style={styles.animatedBackground}></div>
+      {/* Efek salju */}
       <SnowEffect />
 
       <style>{`
@@ -191,3 +178,174 @@ export default function Home() {
     </div>
   );
 }
+
+// Efek salju
+function SnowEffect() {
+  const [flakes, setFlakes] = useState<
+    { id: number; x: number; y: number; size: number; speed: number }[]
+  >([]);
+
+  useEffect(() => {
+    const newFlakes = Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      size: Math.random() * 4 + 2,
+      speed: Math.random() * 1 + 0.5,
+    }));
+    setFlakes(newFlakes);
+
+    const interval = setInterval(() => {
+      setFlakes(prev =>
+        prev.map(flake => {
+          let y = flake.y + flake.speed;
+          if (y > window.innerHeight) {
+            y = -flake.size;
+          }
+          return { ...flake, y };
+        })
+      );
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: -1
+    }}>
+      {flakes.map(flake => (
+        <div
+          key={flake.id}
+          style={{
+            position: 'absolute',
+            top: flake.y,
+            left: flake.x,
+            width: flake.size,
+            height: flake.size,
+            background: 'white',
+            borderRadius: '50%',
+            opacity: 0.8,
+          }}
+        ></div>
+      ))}
+    </div>
+  );
+}
+
+// Styling
+const styles: { [key: string]: React.CSSProperties } = {
+  wrapper: {
+    position: 'relative',
+    minHeight: '100vh',
+    overflow: 'hidden',
+  },
+  animatedBackground: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd)',
+    backgroundSize: '400% 400%',
+    animation: 'gradientMove 15s ease infinite',
+    zIndex: -2,
+  },
+  container: {
+    padding: '1rem',
+    maxWidth: '800px',
+    margin: 'auto',
+    fontFamily: 'Arial, sans-serif',
+    background: 'transparent',
+    minHeight: '100vh',
+    borderRadius: '8px',
+  },
+  title: {
+    fontSize: '2rem',
+    marginBottom: '0.5rem',
+    color: '#4B0082',
+    textAlign: 'center',
+  },
+  subtitle: {
+    marginBottom: '1rem',
+    textAlign: 'center',
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem',
+    marginBottom: '1rem',
+  },
+  input: {
+    padding: '0.5rem',
+    fontSize: '1rem',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    width: '100%',
+  },
+  buttonPrimary: {
+    padding: '0.5rem 1rem',
+    fontSize: '1rem',
+    background: '#4B0082',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  },
+  error: {
+    color: 'red',
+    marginBottom: '1rem',
+    textAlign: 'center',
+  },
+  copyButtons: {
+    marginBottom: '1rem',
+    display: 'flex',
+    gap: '0.5rem',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+  },
+  copyButton: {
+    padding: '0.5rem 1rem',
+    background: '#8A2BE2',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+  },
+  totalInfo: {
+    marginTop: '0.5rem',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  table: {
+    width: '100%',
+    borderCollapse: 'collapse',
+    background: 'transparent', // transparan
+    borderRadius: '8px',
+  },
+  th: {
+    border: '1px solid rgba(255,255,255,0.5)',
+    padding: '0.5rem',
+    backgroundColor: 'rgba(255,255,255,0.2)', // semi transparan
+    textAlign: 'left',
+    color: '#000',
+  },
+  td: {
+    border: '1px solid rgba(255,255,255,0.5)',
+    padding: '0.5rem',
+    wordBreak: 'break-word',
+    backgroundColor: 'transparent', // transparan
+    color: '#000',
+  },
+  link: {
+    color: '#1a0dab',
+    textDecoration: 'underline',
+    wordBreak: 'break-word',
+  },
+};
