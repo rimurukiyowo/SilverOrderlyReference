@@ -50,7 +50,7 @@ export default function Home() {
           .map((file: any) => ({
             id: file.id,
             name: file.name,
-            link: `https://drive.google.com/file/d/${file.id}/view/grafika`,
+            link: `https://drive.google.com/file/d/${file.id}/view?owner=grafika`,
           }))
           .sort((a, b) => naturalSort(a.name, b.name));
 
