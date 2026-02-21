@@ -180,7 +180,14 @@ export default function Home() {
   );
 }
 
-import SnowEffect from '../components/SnowEffect';
+export default function Home() {
+  return (
+    <>
+      <SnowEffect />
+    </>
+  );
+}
+
 // Efek salju
 function SnowEffect() {
   const [flakes, setFlakes] = useState<
