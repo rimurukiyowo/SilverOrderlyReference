@@ -50,7 +50,7 @@ export default function Home() {
           .map((file: any) => ({
             id: file.id,
             name: file.name,
-            link: `https://drive.google.com/file/d/${file.id}/view`,
+            link: `https://drive.google.com/file/d/${file.id}/view?utm_source=grfkflwr&utm_medium=web_usp=drivesdk`,
           }))
           .sort((a, b) => naturalSort(a.name, b.name));
 
@@ -349,3 +349,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     wordBreak: 'break-word',
   },
 };
+
+
+
+
