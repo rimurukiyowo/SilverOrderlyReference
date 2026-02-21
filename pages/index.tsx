@@ -180,14 +180,6 @@ export default function Home() {
   );
 }
 
-export default function Home() {
-  return (
-    <>
-      <SnowEffect />
-    </>
-  );
-}
-
 // Efek salju
 function SnowEffect() {
   const [flakes, setFlakes] = useState<
