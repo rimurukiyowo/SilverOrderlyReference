@@ -116,7 +116,8 @@ export default function Home() {
       <div style={styles.container}>
         <h1 style={styles.title}>WinterLinkFindU</h1>
         <p style={styles.subtitle}>winter uhuyyy!! 💖💖💖</p>
-
+        <p style={styles.subtitle}>DIBILANG JANGAN SEBAR!! 💖💖💖</p>
+        
         <div style={styles.inputContainer}>
           <input
             type="text"
