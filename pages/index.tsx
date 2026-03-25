@@ -65,12 +65,40 @@ export default function Home() {
     setLoading(false);
   };
 
-  const copyToClipboard = (content: string, message: string) => {
+const copyToClipboard = (content: string, message: string) => {
+  if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard
       .writeText(content)
       .then(() => alert(message))
-      .catch(() => alert('Gagal menyalin.'));
-  };
+      .catch(() => fallbackCopy(content, message));
+  } else {
+    fallbackCopy(content, message);
+  }
+};
+
+const fallbackCopy = (text: string, message: string) => {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  try {
+    document.execCommand('copy');
+    alert(message);
+  } catch {
+    alert('Gagal menyalin.');
+  }
+
+  document.body.removeChild(textarea);
+};
+
+  if (files.length === 0) {
+  alert('Tidak ada data untuk disalin!');
+  return;
+}
 
   const copyAllNames = () => {
     const names = files.map(file => file.name).join('\n');
